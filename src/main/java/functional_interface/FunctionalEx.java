@@ -4,8 +4,13 @@ import java.math.BigDecimal;
 
 public class FunctionalEx {
     public static void main(String[] args) {
+        // lambda expression
         doSomething("value: ",30,20,(msg,i1,i2)->msg+(i1*i2));
         doSomething(1,2,3,(n1,n2,n3)->String.valueOf(n1+n2+n3));
+
+        // type decision
+        TripleFunction<Integer,Integer,Integer,String> func = (i1,i2,i3)->String.valueOf(i1+i2+i3);
+        System.out.println(func.apply(1,10,100));
 
         BigDecimalToCurrency bigDecimalToCurrency = bd->"$"+bd;
 
