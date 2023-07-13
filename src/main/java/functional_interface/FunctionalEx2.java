@@ -1,5 +1,7 @@
 package functional_interface;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -23,10 +25,15 @@ public class FunctionalEx2 {
         final BigDecimal twenty = new BigDecimal("20.00");
 
         System.out.println("Ordinary");
+
         // for loop
         List<Product> filterer = filter(productList,p->p.getPrice().compareTo(twenty)>=0);
         System.out.println("filter: "+filterer);
 
+        List<BigDecimal> bigDecimals = map(filterer, Product::getPrice);
+        final BigDecimal total = total(productList, Product::getPrice);
+
+        System.out.println("total price: $"+total);
         final List<Product> expensives = filter(productList,p->p.getPrice().compareTo(new BigDecimal("50"))>0);
         final List<Product> discounted = map(expensives,p->new DiscountedProduct(p.getId(),p.getName(),p.getPrice()
                 .multiply(new BigDecimal("0.5"))));
@@ -38,15 +45,26 @@ public class FunctionalEx2 {
         // stream
         List<Product> stream = productList.stream().filter(p->p.getPrice().compareTo(twenty)>=0).toList();
         System.out.println(stream);
+        System.out.println("stream Total Price: ");
+
     }
 
-    private static <T> List<T> filter(List<T> list , Predicate<T> predicate){
+    private static <T> List<T> filter(List<T> list , Predicate<? super T> predicate){
         List<T> ret = new ArrayList<>();
         for (T t:list){
             if(predicate.test(t))
                 ret.add(t);
         }
         return ret;
+    }
+
+    private static <T> BigDecimal total(List<T> list,Function<T,BigDecimal> function){
+        BigDecimal total = BigDecimal.ZERO;
+        for (final  T t:list){
+            total = total.add(function.apply(t));
+        }
+
+        return total;
     }
 
     private static <T,R> List<R> map(List<T> list, Function<T,R> function){
@@ -65,5 +83,4 @@ class DiscountedProduct extends Product{
     DiscountedProduct(Long id,String name,BigDecimal price){
         super(id,name,price);
     }
-
 }
