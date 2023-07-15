@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-import functional_interface.Product;
+import functional.Product;
 
 public class StreamApiEx {
     public static void main(String[] args) {

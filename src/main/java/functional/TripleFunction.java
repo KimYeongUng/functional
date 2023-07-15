@@ -1,4 +1,4 @@
-package functional_interface;
+package functional;
 
 @FunctionalInterface
 public interface TripleFunction <T1,T2,T3,R>{
