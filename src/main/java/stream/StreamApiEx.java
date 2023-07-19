@@ -3,6 +3,7 @@ package stream;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import functional.Product;
 
@@ -19,8 +20,7 @@ public class StreamApiEx {
 
         List<Product> filtered = productList
                 .stream()
-                .filter(p -> p.getPrice().compareTo(new BigDecimal("100.00")) >= 0)
-                .toList();
+                .filter(p -> p.getPrice().compareTo(new BigDecimal("100.00")) >= 0).collect(Collectors.toList());
 
         System.out.println(filtered);
 

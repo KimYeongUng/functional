@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class FunctionalEx2 {
     public static void main(String[] args) {
@@ -41,7 +42,8 @@ public class FunctionalEx2 {
 
         System.out.println("Stream");
         // stream
-        List<Product> stream = productList.stream().filter(p->p.getPrice().compareTo(twenty)>=0).toList();
+        List<Product> stream = productList.stream().filter(p->p.getPrice().compareTo(twenty)>=0)
+                .collect(Collectors.toList());
         System.out.println(stream);
         System.out.println("stream Total Price: ");
 
