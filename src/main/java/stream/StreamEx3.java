@@ -15,11 +15,10 @@ public class StreamEx3 {
         final List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
 
         Optional<Integer> find = numbers.stream()
-                .filter(i->i>=3&&i<=9)
-                .map(num->num*2)
-                .findFirst();
+                .filter(i->i>=3&&i<=9) // Intermediate Operation Method: return stream
+                .map(num->num*2) // Intermediate Operation Method: return stream
+                .findFirst(); // terminal Operation Method : return optional<T>
 
         System.out.println(find);
     }
-
 }
