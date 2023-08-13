@@ -9,5 +9,10 @@ public class FluxEx1 {
                 .map(i->i*10)
                 .map(i->i+" ")
                 .subscribe(System.out::print);
+        System.out.println();
+        Flux<String> seq =  Flux.just("Hello","World");
+        seq.map(String::toUpperCase)
+                .subscribe(d-> System.out.print(d+" "));
+
     }
 }
