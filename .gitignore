@@ -3,3 +3,9 @@
 /build/
 /build/classes/java/main/
 /.idea
+*.class
+*.xml
+*.bat
+/.idea/
+/.gradle/
+settings.gradle
