@@ -12,17 +12,21 @@ public class SinkEx01 {
     public static void main(String[] args) {
         int tasks = 6;
 
-        Flux.create((FluxSink<String> sinks)-> IntStream.range(1,tasks).forEach(n->sinks.next(doTask(n))))
+        Flux.create((FluxSink<String> sinks)-> IntStream
+                .range(1,tasks)
+                .forEach(n->sinks.next(doTask(n))))
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnNext(n->log.info("# create(): {}",n))
+                .doOnNext(n->log.info("# create():{}",n))
                 .publishOn(Schedulers.parallel())
-                .map(result->result+" success")
-                .doOnNext(n->log.info("map(): {}",n))
+                .map(res->res+" success")
+                .doOnNext(n->log.info("# map(): {}",n))
                 .publishOn(Schedulers.parallel())
-                .subscribe(d->log.info("onNext(): {}",d));
+                .subscribe(data->log.info("# onNext(): {}",data));
+
     }
 
-    private static String doTask(int n) {
+    static String doTask(int n) {
+        log.info("task: {}",n);
         return "task"+n+" result";
     }
 }
