@@ -13,11 +13,9 @@ public class SinkEx01 {
         int tasks = 6;
 
         Flux
-                .create((FluxSink<String> sink)->{
-                    IntStream
-                            .range(1,tasks)
-                            .forEach(n->sink.next(doTask(n)));
-                })
+                .create((FluxSink<String> sink)-> IntStream
+                        .range(1,tasks)
+                        .forEach(n->sink.next(doTask(n))))
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(d->log.info("#create: {}",d))
                 .publishOn(Schedulers.parallel())
