@@ -63,6 +63,7 @@ public class PubSub {
                 @Override
                 public void onError(Throwable t) {
                     es.execute(()->sub.onError(t));
+                    es.shutdown();
                 }
 
                 @Override
