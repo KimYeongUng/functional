@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+import reactor.core.publisher.Flux;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -64,6 +65,10 @@ public class FluxIntervalEx {
                 }
             });
         };
+
+        Flux<Integer> myflux = Flux.just(1,2,3,4,5);
+
+        myflux.subscribe(System.out::println);
 
         takePub.subscribe(new Subscriber<>() {
             @Override
