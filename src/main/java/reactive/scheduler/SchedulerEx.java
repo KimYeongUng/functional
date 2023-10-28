@@ -33,7 +33,7 @@ public class SchedulerEx {
         };
 
         Publisher<Integer> subOnPub = sub -> {
-            ExecutorService es = Executors.newSingleThreadExecutor(new CustomizableThreadFactory(){
+            final ExecutorService es = Executors.newSingleThreadExecutor(new CustomizableThreadFactory(){
                 @Override
                 public String getThreadNamePrefix(){
                     return "subOn-";
@@ -46,7 +46,7 @@ public class SchedulerEx {
         Publisher<Integer> publishOnPub = sub ->{
             subOnPub.subscribe(new Subscriber<>() {
                 // single thread - onNext순서보장
-                ExecutorService es = Executors.newSingleThreadExecutor(new CustomizableThreadFactory(){
+                final ExecutorService es = Executors.newSingleThreadExecutor(new CustomizableThreadFactory(){
                     @Override
                     public String getThreadNamePrefix() {
                         return "pubOn-";
@@ -65,6 +65,7 @@ public class SchedulerEx {
                 @Override
                 public void onError(Throwable t) {
                    es.execute(()-> sub.onError(t));
+                   es.shutdown();
                 }
 
                 @Override
