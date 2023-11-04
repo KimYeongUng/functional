@@ -11,23 +11,24 @@ import java.util.stream.IntStream;
 public class SinkEx01 {
     public static void main(String[] args) throws InterruptedException {
         int tasks = 6;
-
-        Flux
-                .create((FluxSink<String> sink)-> IntStream
-                        .range(1,tasks)
-                        .forEach(n->sink.next(doTask(n))))
+        Flux.create((FluxSink<String> sink)->{
+            IntStream
+                    .range(1,tasks)
+                    .forEach(n->sink.next(doTask(n)));
+        })
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(d->log.info("#create: {}",d))
+                .log()
                 .publishOn(Schedulers.parallel())
-                .map(res->res+ " Success.")
-                .doOnNext(d->log.info("#map(): {}",d))
+                .map(res->res+" Success")
+                .log()
+                .doOnNext(d->log.info("#map: {}",d))
                 .publishOn(Schedulers.parallel())
-                .subscribe(res->log.info("#onNext(): {}",res));
-
-        Thread.sleep(2000L);
+                .subscribe(d->log.info("#onNext: {}",d));
     }
 
-    static String doTask(int n) {
-        return "task"+n+" result";
+    private static String doTask(int d) {
+        return "task "+d+" result";
     }
+
 }
